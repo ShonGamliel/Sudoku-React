@@ -2,18 +2,6 @@ import "./App.css";
 import React from "react";
 import Box from "./Box";
 
-let blocks = [
-  [0, 1, 2, 9, 10, 11, 18, 19, 20],
-  [3, 4, 5, 12, 13, 14, 21, 22, 23],
-  [6, 7, 8, 15, 16, 17, 24, 25, 26],
-  [27, 28, 29, 36, 37, 38, 45, 46, 47],
-  [30, 31, 32, 39, 40, 41, 48, 49, 50],
-  [33, 34, 35, 42, 43, 44, 51, 52, 53],
-  [54, 55, 56, 63, 64, 65, 72, 73, 74],
-  [57, 58, 59, 66, 67, 68, 75, 76, 77],
-  [60, 61, 62, 69, 70, 71, 78, 79, 80],
-];
-
 function App() {
   const [array, setArray] = React.useState(Array(81).fill(""));
   const setNumberInArray = (position, newNumber) => {
@@ -30,13 +18,11 @@ function App() {
       }
     }
 
-    for (let i of blocks) {
-      if (i.includes(position)) {
-        for (let ii of i) {
-          if (array[ii] == newNumber) {
-            return false;
-          }
-        }
+    let r = position - (Math.floor(position / 9) % 3) * 9 - (position % 3);
+    let blockRange = Array.from({ length: 81 }, (_, i) => ([r, r + 1, r + 2, r + 9, r + 10, r + 11, r + 18, r + 19, r + 20].includes(i) ? i : false)).filter(Boolean);
+    for (let ii of blockRange) {
+      if (array[ii] == newNumber) {
+        return false;
       }
     }
 
