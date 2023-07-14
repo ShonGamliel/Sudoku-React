@@ -1,9 +1,12 @@
 import React from "react";
 
-export default function Box({ position, setNumberInArray, style }) {
+export default function Box({ position, setNumberInArray, style, array, isStart }) {
   return (
     <div className="box" style={style}>
       <input
+        style={{ color: isStart ? "grey" : undefined }}
+        disabled={isStart}
+        value={array[position]}
         className="box-input"
         onChange={(e) => {
           if (e.target.value) {
@@ -15,6 +18,8 @@ export default function Box({ position, setNumberInArray, style }) {
                 e.target.value = "";
               }
             }
+          } else {
+            setNumberInArray(position);
           }
         }}
       />
